@@ -54,6 +54,7 @@ set showmatch
 set guifont=Monospace\ 9
 set laststatus=2
 set statusline+=%F
+set hidden
 
 vmap <C-c> "+yi
 vmap <C-x> "+c
@@ -62,8 +63,6 @@ imap <C-v> <C-r><C-o>+
 
 nnoremap <silent> ,q :q<CR>
 map  ,, <C-^>
-map <C-n> :lprevious<CR>
-map <C-m> :lnext<CR>
 nnoremap ü :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 command W w
