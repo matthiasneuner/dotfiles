@@ -5,7 +5,9 @@ endif
 if &term =~ '256color'
    set t_ut=
 endif
-set nocompatible              " be iMproved, required call system('wmctrl -i -b add,maximized_vert,maximized_horz -r '.v:windowid) filetype off                  " required
+
+set nocompatible              
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin() 
 Plugin 'VundleVim/Vundle.vim'
@@ -16,31 +18,14 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'https://github.com/tpope/vim-commentary'
 Plugin 'justinmk/vim-dirvish'
 Plugin 'rdnetto/YCM-Generator' 
-Plugin 'vim-latex/vim-latex' 
 Plugin 'vim-scripts/visual-increment'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'jnurmine/Zenburn'
-call vundle#end()            " required
+Plugin 'https://github.com/lervag/vimtex'
+Plugin 'KeitaNakamura/tex-conceal.vim'   
+call vundle#end()            
 
-"Vim Latex-Suite
-filetype plugin indent on    " required
-if has('gui_running')
-  set grepprg=grep\ -nH\ $*
-  filetype indent on
-  let g:tex_flavor='latex'
-endif
-au BufEnter *.tex set autowrite
-let g:Tex_BibtexFlavor = 'biber'
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_CompileRule_pdf = 'pdflatex -shell-escape -file-line-error -interaction=nonstopmode -synctex=1 $*'
-let g:Tex_GotoError=0
-let g:Tex_ShowErrorContext = 0
-let g:Tex_ViewRule_pdf = 'okular'
-function! SyncTexForward()
-     let execstr = "silent !okular --unique %:p:r.pdf\\#src:".line(".")."%:p &"
-     exec execstr
-endfunction
-nmap <Leader>f :call SyncTexForward()<CR>
+filetype plugin indent on    
 
 syntax enable
 colorscheme zenburn
@@ -68,11 +53,18 @@ nnoremap ü :YcmCompleter GoToDefinitionElseDeclaration<CR>
 command W w
 command Wq wq
 
+"vim-tex and tex-conceal: 
+let g:tex_flavor='latex'
+let g:vimtex_quickfix_mode=0
+set conceallevel=2
+let g:tex_conceal='abdmg'
+
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:UltiSnipsJumpForwardTrigger = "<C-j>"
+let g:UltiSnipsListSnippets = "<C-Space>"
 
-let g:ycm_filetype_whitelist = { 'cpp': 1, 'h':1,  'py':1 }
+" let g:ycm_filetype_whitelist = { 'cpp': 1, 'h':1,  'py':1 }
 let g:ycm_autoclose_preview_window_after_completion=0
 let g:ycm_autoclose_preview_window_after_insertion=1
 let g:ycm_confirm_extra_conf =0

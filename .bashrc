@@ -184,3 +184,6 @@ fi
 unset __conda_setup
 
 alias config='/usr/bin/git --git-dir=/home/matthias/.cfg/ --work-tree=/home/matthias'
+
+# if matebook special includes found ..
+source matebookincludes.sh  &> /dev/null || true 
