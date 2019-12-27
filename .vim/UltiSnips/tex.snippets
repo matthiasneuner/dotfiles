@@ -22,8 +22,16 @@ else:
 `$2
 endsnippet
 
-snippet '([A-Za-z\}])([_\^])' "auto sub and superscript" wrA
-`!p snip.rv = match.group(1)+match.group(2)`{$1}$0
+# snippet '([A-Za-z\}])([_\^])' "auto sub and superscript" wrA
+# `!p snip.rv = match.group(1)+match.group(2)`{$1}$0
+# endsnippet
+
+snippet __ "subscript" iA
+_{$1}$0
+endsnippet
+
+snippet ^ "superscript" iA
+^{$1}$0
 endsnippet
 
 snippet ** "upright" wA

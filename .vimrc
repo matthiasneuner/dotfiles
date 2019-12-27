@@ -35,11 +35,12 @@ set ts=4
 set autoindent
 set expandtab
 set shiftwidth=4
-set showmatch
 set guifont=Monospace\ 9
 set laststatus=2
 set statusline+=%F
 set hidden
+set noshowmatch
+set conceallevel=1
 
 vmap <C-c> "+yi
 vmap <C-x> "+c
@@ -53,26 +54,36 @@ nnoremap ü :YcmCompleter GoToDefinitionElseDeclaration<CR>
 command W w
 command Wq wq
 
-"vim-tex and tex-conceal: 
+"vimtex and tex-conceal: 
 let g:tex_flavor='latex'
-let g:vimtex_quickfix_mode=0
-set conceallevel=1
 let g:tex_conceal='abdmg'
+let g:vimtex_quickfix_mode=0
+let g:vimtex_complete_close_braces=1
+" let g:vimtex_syntax_enabled=0
+" let g:vimtex_syntax_nested=0
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:UltiSnipsJumpForwardTrigger = "<C-j>"
 let g:UltiSnipsListSnippets = "<C-Space>"
 
-let g:ycm_filetype_whitelist = { 'cpp': 1, 'h':1,  'py':1 }
+" let g:ycm_filetype_whitelist = { 'cpp': 1, 'h':1,  'py':1 }
 let g:ycm_autoclose_preview_window_after_completion=0
 let g:ycm_autoclose_preview_window_after_insertion=1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_always_populate_location_list = 1
 let g:ycm_auto_trigger=1
 let g:ycm_max_diagnostics_to_display = 100
+" 'disable' identifier completion list
+let g:ycm_min_num_identifier_candidate_chars = 1000
 
 let g:ctrlp_cmd = 'CtrlPBuffer'
+
+" completion for vimtex
+if !exists('g:ycm_semantic_triggers')
+let g:ycm_semantic_triggers = {}
+endif
+au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 function RemoveAbaqusINPStuff()
     :%s/generate/generate=True/g
