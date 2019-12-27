@@ -56,7 +56,7 @@ command Wq wq
 "vim-tex and tex-conceal: 
 let g:tex_flavor='latex'
 let g:vimtex_quickfix_mode=0
-set conceallevel=2
+set conceallevel=1
 let g:tex_conceal='abdmg'
 
 " better key bindings for UltiSnipsExpandTrigger
@@ -64,10 +64,10 @@ let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:UltiSnipsJumpForwardTrigger = "<C-j>"
 let g:UltiSnipsListSnippets = "<C-Space>"
 
-" let g:ycm_filetype_whitelist = { 'cpp': 1, 'h':1,  'py':1 }
+let g:ycm_filetype_whitelist = { 'cpp': 1, 'h':1,  'py':1 }
 let g:ycm_autoclose_preview_window_after_completion=0
 let g:ycm_autoclose_preview_window_after_insertion=1
-let g:ycm_confirm_extra_conf =0
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_always_populate_location_list = 1
 let g:ycm_auto_trigger=1
 let g:ycm_max_diagnostics_to_display = 100

@@ -1,28 +1,156 @@
-snippet SIG "sigma" A 
-\sigma_{${1:ij}} $2
+# global !p
+# texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+# texIgnoreMathZones = ['texMathText']
+# texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+# texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+# ignore = texIgnoreMathZoneIds[0]
+# def math():
+# 	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+# 	try:
+# 		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+# 		return first != ignore
+# 	except StopIteration:
+# 		return False
+# endglobal
+
+snippet $$ "inline math" A 
+$ ${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
 endsnippet
 
-snippet MOM "couple stress" A 
-m_{${1:ij}} $2
+snippet '([A-Za-z\}])([_\^])' "auto sub and superscript" wrA
+`!p snip.rv = match.group(1)+match.group(2)`{$1}$0
 endsnippet
 
-snippet EPS "epsilon" A 
-\varepsilon_{${1:ij}} $2
+snippet ** "upright" wA
+\*{$1}$0
 endsnippet
 
-snippet CUR "curvature" A 
-\kappa_{${1:ij}} $2
+snippet IJ "subscript ij" iA
+_{ij}
 endsnippet
 
-snippet LEVI "Levi civita" A 
-\epsilon_{${1:ijk}} $2
+snippet KL "subscript kl" iA
+_{kl}
 endsnippet
 
-snippet CC "fourth order stiffness Tensor" A 
-\mathbb{C}_{${1:ijkl}} $2
+snippet MN "subscript mn" iA
+_{mn}
 endsnippet
 
-snippet DD "gradient" A 
-\frac{\partial}{\partial ${1:x_{${2:ij}}}} $3
+#context "math()"
+# snippet SSIG "sigma" wA 
+# \sigma_{${1:ij}} $0
+# endsnippet
+snippet SIG "sigma" wA 
+\sigma
+endsnippet
+
+snippet EFFSIG "sigma" wA 
+\effSig
+endsnippet
+
+snippet EFFMOM "sigma" wA 
+\effM
+endsnippet
+
+snippet EFFSM "sigma" wA 
+\effSigM
+endsnippet
+
+snippet EFFRHO "sigma" wA 
+\effRho
+endsnippet
+
+snippet EFFTHETA "sigma" wA 
+\effTheta
+endsnippet
+
+# context "math()"
+# snippet MOM "couple stress" wA 
+# m_{${1:ij}} $0
+# endsnippet
+# m_{${1:ij}} $0
+
+#context "math()"
+snippet EEPS "epsilon elastic" wA 
+\varepsilon^{\*e}
+endsnippet
+# \varepsilon^{\*e}_{${1:ij}} $0
+
+#context "math()"
+snippet PEPS "epsilon plastic" wA 
+\varepsilon^{\*p}
+endsnippet
+# \varepsilon^{\*p}_{${1:ij}} $0
+
+#context "math()"
+snippet EPS "epsilon" wA 
+\varepsilon
+endsnippet
+#\varepsilon_{${1:ij}} $0
+
+#context "math()"
+snippet ECUR "elastic curvature" wA 
+\kappa^{\*e}
+endsnippet
+# \kappa^{\*e}_{${1:ij}} $0
+
+#context "math()"
+snippet PCUR "plastic curvature" wA 
+\kappa^{\*p}
+endsnippet
+# \kappa^{\*p}_{${1:ij}} $0
+
+#context "math()"
+snippet CUR "curvature" wA 
+\kappa
+endsnippet
+# \kappa_{${1:ij}} $0
+
+#context "math()"
+snippet LEVI "Levi civita" wA 
+\epsilon_{${1:ijk}} $0
+endsnippet
+
+#context "math()"
+snippet CC "fourth order stiffness Tensor" wA 
+\mathbb{C}
+endsnippet
+# \mathbb{C}_{${1:ijkl}} $0
+
+#context "math()"
+snippet MCC "fourth order stiffness Tensor couple stress" wA 
+\mathbb{C}^\*{m}
+endsnippet
+# \mathbb{C}^\*{m}_{${1:ijkl}} $0
+
+#context "math()"
+snippet DD "partial" wA 
+\frac{\partial $1}{\partial $2} $0
+endsnippet
+
+#context "math()"
+snippet DX "gradient" wA 
+\frac{\partial}{\partial ${1:x_{${2:i}}}} $0
+endsnippet
+
+#context "math()"
+snippet ALPHAP "alpha p" wA
+\alpha_{\*{p}}
+endsnippet
+
+#context "math()"
+snippet ALPHAD "alpha d" wA
+\alpha_{\*{d}}
+endsnippet
+
+#context "math()"
+snippet NALPHAD "nonlocla alpha d" wA
+\tilde\alpha_{\*{d}}
 endsnippet
 
