@@ -22,10 +22,6 @@ else:
 `$2
 endsnippet
 
-# snippet '([A-Za-z\}])([_\^])' "auto sub and superscript" wrA
-# `!p snip.rv = match.group(1)+match.group(2)`{$1}$0
-# endsnippet
-
 snippet __ "subscript" iA
 _{$1}$0
 endsnippet
@@ -34,12 +30,16 @@ snippet ^ "superscript" iA
 ^{$1}$0
 endsnippet
 
-snippet ** "upright" wA
+snippet ** "upright" iA
 \*{$1}$0
 endsnippet
 
 snippet IJ "subscript ij" iA
 _{ij}
+endsnippet
+
+snippet JI "subscript ji" iA
+_{ji}
 endsnippet
 
 snippet KL "subscript kl" iA
@@ -50,12 +50,8 @@ snippet MN "subscript mn" iA
 _{mn}
 endsnippet
 
-#context "math()"
-# snippet SSIG "sigma" wA 
-# \sigma_{${1:ij}} $0
-# endsnippet
 snippet SIG "sigma" wA 
-\sigma
+\sig
 endsnippet
 
 snippet EFFSIG "sigma" wA 
@@ -67,7 +63,7 @@ snippet EFFMOM "sigma" wA
 endsnippet
 
 snippet EFFSM "sigma" wA 
-\effSigM
+\effSigMean
 endsnippet
 
 snippet EFFRHO "sigma" wA 
@@ -78,64 +74,43 @@ snippet EFFTHETA "sigma" wA
 \effTheta
 endsnippet
 
-# context "math()"
-# snippet MOM "couple stress" wA 
-# m_{${1:ij}} $0
-# endsnippet
-# m_{${1:ij}} $0
-
-#context "math()"
 snippet EEPS "epsilon elastic" wA 
-\varepsilon^{\*e}
+\eps^{\*e}
 endsnippet
-# \varepsilon^{\*e}_{${1:ij}} $0
 
-#context "math()"
 snippet PEPS "epsilon plastic" wA 
-\varepsilon^{\*p}
+\eps^{\*p}
 endsnippet
-# \varepsilon^{\*p}_{${1:ij}} $0
 
-#context "math()"
 snippet EPS "epsilon" wA 
-\varepsilon
+\eps
 endsnippet
-#\varepsilon_{${1:ij}} $0
 
-#context "math()"
 snippet ECUR "elastic curvature" wA 
-\kappa^{\*e}
+\cur^{\*e}
 endsnippet
-# \kappa^{\*e}_{${1:ij}} $0
 
-#context "math()"
 snippet PCUR "plastic curvature" wA 
-\kappa^{\*p}
+\cur^{\*p}
 endsnippet
-# \kappa^{\*p}_{${1:ij}} $0
 
-#context "math()"
 snippet CUR "curvature" wA 
-\kappa
+\cur
 endsnippet
-# \kappa_{${1:ij}} $0
 
-#context "math()"
 snippet LEVI "Levi civita" wA 
 \epsilon_{${1:ijk}} $0
 endsnippet
 
 #context "math()"
 snippet CC "fourth order stiffness Tensor" wA 
-\mathbb{C}
+\CS
 endsnippet
-# \mathbb{C}_{${1:ijkl}} $0
 
 #context "math()"
 snippet MCC "fourth order stiffness Tensor couple stress" wA 
-\mathbb{C}^\*{m}
+\CM
 endsnippet
-# \mathbb{C}^\*{m}_{${1:ijkl}} $0
 
 #context "math()"
 snippet DD "partial" wA 
@@ -149,16 +124,16 @@ endsnippet
 
 #context "math()"
 snippet ALPHAP "alpha p" wA
-\alpha_{\*{p}}
+\alphaP
 endsnippet
 
 #context "math()"
 snippet ALPHAD "alpha d" wA
-\alpha_{\*{d}}
+\alphaD
 endsnippet
 
 #context "math()"
-snippet NALPHAD "nonlocla alpha d" wA
-\tilde\alpha_{\*{d}}
+snippet NALPHAD "nonlocal alpha d" wA
+\alphaDNL
 endsnippet
 

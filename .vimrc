@@ -59,8 +59,6 @@ let g:tex_flavor='latex'
 let g:tex_conceal='abdmg'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_complete_close_braces=1
-" let g:vimtex_syntax_enabled=0
-" let g:vimtex_syntax_nested=0
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<C-j>"
