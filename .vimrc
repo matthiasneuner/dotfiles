@@ -58,7 +58,8 @@ command Wq wq
 let g:tex_flavor='latex'
 let g:tex_conceal='abdmg'
 let g:vimtex_quickfix_mode=0
-let g:vimtex_complete_close_braces=1
+let g:vimtex_complete_close_braces=1 "otherwise more or less useless
+let g:vimtex_matchparen_enabled=0 "don't be sluggish!
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<C-j>"
@@ -72,8 +73,7 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_always_populate_location_list = 1
 let g:ycm_auto_trigger=1
 let g:ycm_max_diagnostics_to_display = 100
-" 'disable' identifier completion list
-let g:ycm_min_num_identifier_candidate_chars = 1000
+let g:ycm_min_num_identifier_candidate_chars = 1000 " 'disable' identifier completion list
 
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
