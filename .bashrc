@@ -158,7 +158,7 @@ alias wbsp='python ~/constitutiveModelling/Abaqus-Workbench/workbenchJobSinglePo
 alias vim='PATH=/usr/bin:$PATH vim'
 alias mpfem='singularity exec /home/matthias/constitutiveModelling/SingularityMPFEM/mpFEM.img /mpFEM/mpFEM'
 alias mountainmaster='python ~/constitutiveModelling/MountainMaster/meshgenerator.py'
-alias ensight='singularity exec --nv  ~/constitutiveModelling/SingularityAnsys/ansys19-centos-7.simg /ansys/ansys_inc/v194/CEI/bin/ensight194'
+alias ensight='singularity exec --nv  ~/ansys19-centos-7.simg /ansys/ansys_inc/v194/CEI/bin/ensight194'
 alias ens_checker='singularity exec ~/constitutiveModelling/SingularityAnsys/ansys19-centos-7.simg /ansys/ansys_inc/v194/CEI/bin/ens_checker'
 
 
