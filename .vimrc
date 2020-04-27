@@ -24,6 +24,7 @@ Plug 'vim-scripts/visual-increment'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jnurmine/Zenburn'
 Plug 'morhetz/gruvbox'
+Plug 'cocopon/iceberg.vim'
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim'   
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -76,6 +77,8 @@ let g:tex_conceal='abdmg'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_complete_close_braces=1            " otherwise more or less useless
 let g:vimtex_matchparen_enabled=0               " don't be sluggish!
+let g:vimtex_view_method = 'zathura'
+
 " }}}
 
 " ctrlP {{{
@@ -132,11 +135,13 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Use <C-j> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " modified by me: if Coc failed, it tries to expand a snippet using ultisnips
+snoremap <silent> <C-j>  <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
 if exists('*complete_info')
     " inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
     inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"
 else
-    imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"
 endif
 
 " Use `[g` and `]g` to navigate diagnostics

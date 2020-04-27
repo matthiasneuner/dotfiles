@@ -1,0 +1,139 @@
+# global !p
+# texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+# texIgnoreMathZones = ['texMathText']
+# texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+# texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+# ignore = texIgnoreMathZoneIds[0]
+# def math():
+# 	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+# 	try:
+# 		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+# 		return first != ignore
+# 	except StopIteration:
+# 		return False
+# endglobal
+
+snippet $$ "inline math" A 
+$ ${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
+snippet __ "subscript" iA
+_{$1}$0
+endsnippet
+
+snippet ^ "superscript" iA
+^{$1}$0
+endsnippet
+
+snippet ** "upright" iA
+\*{$1}$0
+endsnippet
+
+snippet IJ "subscript ij" iA
+_{ij}
+endsnippet
+
+snippet JI "subscript ji" iA
+_{ji}
+endsnippet
+
+snippet KL "subscript kl" iA
+_{kl}
+endsnippet
+
+snippet MN "subscript mn" iA
+_{mn}
+endsnippet
+
+snippet SIG "sigma" wA 
+\sig
+endsnippet
+
+snippet EFFSIG "sigma" wA 
+\effSig
+endsnippet
+
+snippet EFFMOM "sigma" wA 
+\effM
+endsnippet
+
+snippet EFFSM "sigma" wA 
+\effSigMean
+endsnippet
+
+snippet EFFRHO "sigma" wA 
+\effRho
+endsnippet
+
+snippet EFFTHETA "sigma" wA 
+\effTheta
+endsnippet
+
+snippet EEPS "epsilon elastic" wA 
+\eps^{\*e}
+endsnippet
+
+snippet PEPS "epsilon plastic" wA 
+\eps^{\*p}
+endsnippet
+
+snippet EPS "epsilon" wA 
+\eps
+endsnippet
+
+snippet ECUR "elastic curvature" wA 
+\cur^{\*e}
+endsnippet
+
+snippet PCUR "plastic curvature" wA 
+\cur^{\*p}
+endsnippet
+
+snippet CUR "curvature" wA 
+\cur
+endsnippet
+
+snippet LEVI "Levi civita" wA 
+\epsilon_{${1:ijk}} $0
+endsnippet
+
+#context "math()"
+snippet CC "fourth order stiffness Tensor" wA 
+\CS
+endsnippet
+
+#context "math()"
+snippet MCC "fourth order stiffness Tensor couple stress" wA 
+\CM
+endsnippet
+
+#context "math()"
+snippet DD "partial" wA 
+\frac{\partial $1}{\partial $2} $0
+endsnippet
+
+#context "math()"
+snippet DX "gradient" wA 
+\frac{\partial}{\partial ${1:x_{${2:i}}}} $0
+endsnippet
+
+#context "math()"
+snippet ALPHAP "alpha p" wA
+\alphaP
+endsnippet
+
+#context "math()"
+snippet ALPHAD "alpha d" wA
+\alphaD
+endsnippet
+
+#context "math()"
+snippet NALPHAD "nonlocal alpha d" wA
+\alphaDNL
+endsnippet
+

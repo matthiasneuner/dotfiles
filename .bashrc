@@ -152,7 +152,7 @@ alias edelweiss='python ~/constitutiveModelling/EdelweissFE/edelweiss.py'
 #}
 #alias abaqus="startaba"
 #alias abaqus="singularity exec --nv /home/matthias/abaqus-2017-centos-7.simg abaqus"
-alias abaqus="singularity exec --nv /home/matthias/constitutiveModelling/SingularityAbaqus2019/abaqus-2019-centos-7.simg abaqus"
+alias abaqus="singularity exec --nv /home/matthias/abaqus-2019-centos-7.simg abaqus"
 
 alias wbsp='python ~/constitutiveModelling/Abaqus-Workbench/workbenchJobSinglePoint.py'
 alias vim='PATH=/usr/bin:$PATH vim'
