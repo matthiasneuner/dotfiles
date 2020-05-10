@@ -2,6 +2,17 @@
 # ~/.bashrc
 #
 
+
+if [ "${HOSTNAME}" = "matthias-xpro" ]; then
+    TEXTCOLOR=35 #purple
+elif [ "${HOSTNAME}" = "matthias-pc" ]; then
+    TEXTCOLOR=32 # green
+elif [ "${HOSTNAME}" = "leo4.uibk.ac.at" ]; then
+    TEXTCOLOR=34 # blue 
+elif [ "${HOSTNAME}" = "leo4.uibk.ac.at" ]; then
+    TEXTCOLOR=31 # red
+fi
+
 [[ $- != *i* ]] && return
 
 colors() {
@@ -59,6 +70,7 @@ match_lhs=""
 	&& match_lhs=$(dircolors --print-database)
 [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
 
+
 if ${use_color} ; then
 	# Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
 	if type -P dircolors >/dev/null ; then
@@ -72,7 +84,7 @@ if ${use_color} ; then
 	if [[ ${EUID} == 0 ]] ; then
 		PS1='\[\033[01;31m\][\h\[\033[01;36m\] ${PWD/#$HOME/\~}\[\033[01;31m\]]\$\[\033[00m\] '
 	else
-		PS1='\[\033[01;35m\][\u@\h\[\033[01;37m\] ${PWD/#$HOME/\~}\[\033[01;35m\]]\$\[\033[00m\] '
+		PS1='\[\033[01;${TEXTCOLOR}m\][\u@\h\[\033[01;37m\] ${PWD/#$HOME/\~}\[\033[01;${TEXTCOLOR}m\]]\$\[\033[00m\] '
 	fi
 
 	alias ls='ls --color=auto'
