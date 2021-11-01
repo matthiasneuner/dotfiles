@@ -77,7 +77,9 @@ let g:tex_conceal='abdmg'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_complete_close_braces=1            " otherwise more or less useless
 let g:vimtex_matchparen_enabled=0               " don't be sluggish!
-let g:vimtex_view_method = 'zathura'
+let g:vimtex_view_general_viewer = 'okular'
+let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
 
 " }}}
 
