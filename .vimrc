@@ -28,6 +28,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim'   
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 call plug#end()
 
 filetype plugin indent on    
@@ -81,6 +82,8 @@ let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
 
+call system('xdotool getactivewindow > /tmp/vim_wid.txt')
+
 " }}}
 
 " ctrlP {{{
@@ -116,35 +119,31 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"function! CheckBackSpace() abort
+"      let col = col('.') - 1
+"        return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
 
 function! s:check_back_space() abort
     let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+" Insert <tab> when previous text is space, refresh completion if not.
+inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1):
+    \ <SID>check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <C-j> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" modified by me: if Coc failed, it tries to expand a snippet using ultisnips
-snoremap <silent> <C-j>  <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
-if exists('*complete_info')
-    " inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-    inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"
-else
-    " imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-    imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"
-endif
+inoremap <silent><expr> <C-j>                                                               
+      \ coc#pum#visible() ? coc#_select_confirm() :                             
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :                                                       
+      \ coc#refresh()       
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
