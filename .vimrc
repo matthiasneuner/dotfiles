@@ -35,7 +35,7 @@ filetype plugin indent on
 syntax enable
 colorscheme zenburn
 let g:gruvbox_contrast_dark='soft'
-" colorscheme gruvbox 
+colorscheme gruvbox 
 set bg=dark
 set lbr
 set number
@@ -99,7 +99,7 @@ endfunction
 " }}}
 
 " Coc Setup {{{
-let g:coc_global_extensions=['coc-vimtex', 'coc-clangd', 'coc-cmake']
+let g:coc_global_extensions=['coc-vimtex', 'coc-clangd', 'coc-cmake', 'coc-jedi']
 
 " Some servers have issues with backup files, see #649.
 set nobackup
