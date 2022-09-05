@@ -28,6 +28,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim'   
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-snippets'
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 call plug#end()
 
@@ -69,7 +70,7 @@ imap <C-v> <C-r><C-o>+
 " UltiSnips {{{
 let g:UltiSnipsExpandTrigger = "<nop>"          " disable due to clash with CoC
 let g:UltiSnipsJumpForwardTrigger = "<nop>"     " -,,- 
-let g:UltiSnipsListSnippets = "<C-Space>"
+let g:UltiSnipsListSnippets = "<nop>"
 "}}}
 
 " Vimtex & conceal {{{
@@ -119,11 +120,6 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-"function! CheckBackSpace() abort
-"      let col = col('.') - 1
-"        return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
@@ -136,14 +132,17 @@ inoremap <silent><expr> <TAB>
     \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Use <c-space> to trigger completion.
+" Use <c-space> to refresh
 inoremap <silent><expr> <c-space> coc#refresh()
 
+" Use <c-j> to complete, jump, or refresh
 inoremap <silent><expr> <C-j>                                                               
       \ coc#pum#visible() ? coc#_select_confirm() :                             
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :                                                       
       \ coc#refresh()       
+
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
