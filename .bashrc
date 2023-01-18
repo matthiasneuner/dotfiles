@@ -5,6 +5,8 @@
 
 if [ "${HOSTNAME}" = "matthias-xpro" ]; then
     TEXTCOLOR=35 #purple
+elif [ "${HOSTNAME}" = "ryzen23-3-neuner" ]; then
+    TEXTCOLOR=32 # green
 elif [ "${HOSTNAME}" = "matthias-pc" ]; then
     TEXTCOLOR=32 # green
 elif [ "${HOSTNAME}" = "leo4.uibk.ac.at" ]; then
