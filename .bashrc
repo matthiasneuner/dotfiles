@@ -1,7 +1,27 @@
-#
-# ~/.bashrc
-#
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+for condapath in "/home/matthias/constitutive_modeling/miniforge3" "/home/matthias/constitutive_modeling/mambaforge3" "/home/matthias/anaconda3"; do
+    if [ -f "$condapath/bin/conda" ]; then
+        __conda_setup="$('$condapath/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            eval "$__conda_setup"
+        else
+            if [ -f "$condapath/etc/profile.d/conda.sh" ]; then
+                . "$condapath/etc/profile.d/conda.sh"
+            else
+                export PATH="$condapath/bin:$PATH"
+            fi
+        fi
+        unset __conda_setup
+        break
+    fi
+done
+# <<< conda initialize <<<
 
+# User local bin
+if [ -d "/home/matthias/.local/bin" ]; then
+    export PATH="/home/matthias/.local/bin:$PATH"
+fi
 
 if [ "${HOSTNAME}" = "x9" ]; then
     TEXTCOLOR=35 #purple
@@ -188,29 +208,4 @@ alias sudo='sudo -E'
 alias config='/usr/bin/git --git-dir=/home/matthias/.cfg/ --work-tree=/home/matthias'
 
 # if matebook special includes found ..
-source matebookincludes.sh  &> /dev/null || true 
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-for condapath in "/home/matthias/constitutive_modeling/miniforge3" "/home/matthias/constitutive_modeling/mambaforge3" "/home/matthias/anaconda3"; do
-    if [ -f "$condapath/bin/conda" ]; then
-        __conda_setup="$('$condapath/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-        if [ $? -eq 0 ]; then
-            eval "$__conda_setup"
-        else
-            if [ -f "$condapath/etc/profile.d/conda.sh" ]; then
-                . "$condapath/etc/profile.d/conda.sh"
-            else
-                export PATH="$condapath/bin:$PATH"
-            fi
-        fi
-        unset __conda_setup
-        break
-    fi
-done
-# <<< conda initialize <<<
-
-# Antigravity CLI
-if [ -d "/home/matthias/.local/bin" ]; then
-    export PATH="/home/matthias/.local/bin:$PATH"
-fi
+source matebookincludes.sh  &> /dev/null || true
