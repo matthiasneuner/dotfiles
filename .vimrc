@@ -1,3 +1,6 @@
+set encoding=utf-8
+scriptencoding utf-8
+
 if $TERM == "xterm-256color"
     set t_Co=256
 endif
@@ -26,7 +29,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim'   
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
+Plug 'pappasam/coc-jedi', { 'do': 'npm install --legacy-peer-deps && npm run build', 'branch': 'main' }
 Plug 'github/copilot.vim'
 
 " Git Plugins
