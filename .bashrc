@@ -5,9 +5,11 @@ for condapath in "/home/matthias/constitutive_modeling/miniforge3" "/home/matthi
         __conda_setup="$('$condapath/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
         if [ $? -eq 0 ]; then
             eval "$__conda_setup"
+            conda activate base 2>/dev/null || true
         else
             if [ -f "$condapath/etc/profile.d/conda.sh" ]; then
                 . "$condapath/etc/profile.d/conda.sh"
+                conda activate base 2>/dev/null || true
             else
                 export PATH="$condapath/bin:$PATH"
             fi
