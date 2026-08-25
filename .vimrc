@@ -16,8 +16,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'psliwka/vim-smoothie'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets' 
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-dirvish'
 Plug 'vim-scripts/visual-increment'
@@ -28,8 +26,12 @@ Plug 'cocopon/iceberg.vim'
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim'   
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-snippets'
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
+Plug 'github/copilot.vim'
+
+" Git Plugins
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 filetype plugin indent on    
@@ -61,17 +63,11 @@ command Wq wq
 
 " clipboard {{{
 set clipboard+=unnamedplus
-vmap <C-c> "+yi
-vmap <C-x> "+c
-vmap <C-v> c<ESC>"+p
-imap <C-v> <C-r><C-o>+
+vnoremap <C-c> "+yi
+vnoremap <C-x> "+c
+vnoremap <C-v> c<ESC>"+p
+inoremap <C-v> <C-r><C-o>+
 " }}}
-"
-" UltiSnips {{{
-let g:UltiSnipsExpandTrigger = "<nop>"          " disable due to clash with CoC
-let g:UltiSnipsJumpForwardTrigger = "<nop>"     " -,,- 
-let g:UltiSnipsListSnippets = "<nop>"
-"}}}
 
 " Vimtex & conceal {{{
 let g:tex_flavor='latex'
@@ -106,9 +102,6 @@ let g:coc_global_extensions=['coc-vimtex', 'coc-clangd', 'coc-cmake', 'coc-jedi'
 set nobackup
 set nowritebackup
 
-" Give more space for displaying messages.
-" set cmdheight=2
-
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=200
@@ -135,14 +128,10 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " Use <c-space> to refresh
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <c-j> to complete, jump, or refresh
-inoremap <silent><expr> <C-j>                                                               
-      \ coc#pum#visible() ? coc#_select_confirm() :                             
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ coc#refresh()       
-
-let g:coc_snippet_next = '<C-j>'
-let g:coc_snippet_prev = '<C-k>'
+" Use <c-j> to complete or refresh
+inoremap <silent><expr> <C-j>                                                       
+      \ coc#pum#visible() ? coc#_select_confirm() :                              
+      \ coc#refresh()        
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -201,7 +190,6 @@ omap af <Plug>(coc-funcobj-a)
 
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
 
@@ -215,8 +203,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
@@ -232,9 +218,31 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" nnoremap <silent> <TAB>  :<C-u>CocNext<CR>
 " Do default action for previous item.
-" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" }}}
+
+" Github Copilot {{{
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-g> copilot#Accept("\<CR>")
+imap <C-h> <Plug>(copilot-accept-word)
+" }}}
+
+" Vim-GitGutter Configuration {{{
+" Use standard signs
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '‾'
+let g:gitgutter_sign_modified_removed = '|'
+
+" Ensure it only shows in the sign column
+let g:gitgutter_highlight_lines = 0
+let g:gitgutter_highlight_numbers = 0
+" }}}
+
+" Fugitive Shortcuts {{{
+nnoremap <leader>gs :G<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gp :Git push<CR>
 " }}}

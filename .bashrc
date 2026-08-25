@@ -3,7 +3,9 @@
 #
 
 
-if [ "${HOSTNAME}" = "matthias-xpro" ]; then
+if [ "${HOSTNAME}" = "x9" ]; then
+    TEXTCOLOR=35 #purple
+elif [ "${HOSTNAME}" = "rabbit" ]; then
     TEXTCOLOR=35 #purple
 elif [ "${HOSTNAME}" = "ryzen23-3-neuner" ]; then
     TEXTCOLOR=32 # green
@@ -11,7 +13,7 @@ elif [ "${HOSTNAME}" = "matthias-pc" ]; then
     TEXTCOLOR=32 # green
 elif [ "${HOSTNAME}" = "leo4.uibk.ac.at" ]; then
     TEXTCOLOR=34 # blue 
-elif [ "${HOSTNAME}" = "leo4.uibk.ac.at" ]; then
+elif [ "${HOSTNAME}" = "leo5.uibk.ac.at" ]; then
     TEXTCOLOR=31 # red
 fi
 
@@ -159,14 +161,17 @@ export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1
 # export PATH="/home/matthias/anaconda3/bin:$PATH"  # commented out by conda initialize
 
 alias ll='ls -lh'
-alias edelweiss='python ~/constitutiveModelling/EdelweissFE/edelweiss.py'
-#startaba(){
-    ##sudo /etc/3DxWare/daemon/3dxsrv -d usb
-    ##XLIB_SKIP_ARGB_VISUALS=1 /home/matthias/Commands/abaqus cae
-#}
-#alias abaqus="startaba"
-#alias abaqus="singularity exec --nv /home/matthias/abaqus-2017-centos-7.simg abaqus"
-alias abaqus="singularity exec --nv /home/matthias/abaqus-2019-centos-7.simg abaqus"
+if [ -f "$HOME/constitutive_modeling/next_v2611/EdelweissFE/edelweissfe/_cli/edelweissfe.py" ]; then
+    alias edelweiss='python ~/constitutive_modeling/next_v2611/EdelweissFE/edelweissfe/_cli/edelweissfe.py'
+elif [ -f "$HOME/constitutiveModelling/EdelweissFE/edelweiss.py" ]; then
+    alias edelweiss='python ~/constitutiveModelling/EdelweissFE/edelweiss.py'
+fi
+
+if [ -f "/home/matthias/abaqus-2024-EL7-gcdp-viscoplasticity.sif" ]; then
+    alias abaqus="apptainer exec --nv /home/matthias/abaqus-2024-EL7-gcdp-viscoplasticity.sif abaqus"
+elif [ -f "/home/matthias/abaqus-2019-centos-7.simg" ]; then
+    alias abaqus="singularity exec --nv /home/matthias/abaqus-2019-centos-7.simg abaqus"
+fi
 
 alias wbsp='python ~/constitutiveModelling/Abaqus-Workbench/workbenchJobSinglePoint.py'
 alias vim='PATH=/usr/bin:$PATH vim'
@@ -175,29 +180,37 @@ alias mountainmaster='python ~/constitutiveModelling/MountainMaster/meshgenerato
 alias ensight='singularity exec --nv  ~/ansys19-centos-7.simg /ansys/ansys_inc/v194/CEI/bin/ensight194'
 alias ens_checker='singularity exec ~/constitutiveModelling/SingularityAnsys/ansys19-centos-7.simg /ansys/ansys_inc/v194/CEI/bin/ens_checker'
 
-
 if [ -e /etc/profile.d/vte.sh ]; then
     . /etc/profile.d/vte.sh
 fi
 
 alias sudo='sudo -E'
-# added by Anaconda3 2018.12 installer
-# >>> conda init >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(CONDA_REPORT_ERRORS=false '/home/matthias/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    \eval "$__conda_setup"
-else
-    if [ -f "/home/matthias/anaconda3/etc/profile.d/conda.sh" ]; then
-# . "/home/matthias/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
-        CONDA_CHANGEPS1=false conda activate base
-    else
-        \export PATH="/home/matthias/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-
 alias config='/usr/bin/git --git-dir=/home/matthias/.cfg/ --work-tree=/home/matthias'
 
 # if matebook special includes found ..
 source matebookincludes.sh  &> /dev/null || true 
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+for condapath in "/home/matthias/constitutive_modeling/miniforge3" "/home/matthias/constitutive_modeling/mambaforge3" "/home/matthias/anaconda3"; do
+    if [ -f "$condapath/bin/conda" ]; then
+        __conda_setup="$('$condapath/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            eval "$__conda_setup"
+        else
+            if [ -f "$condapath/etc/profile.d/conda.sh" ]; then
+                . "$condapath/etc/profile.d/conda.sh"
+            else
+                export PATH="$condapath/bin:$PATH"
+            fi
+        fi
+        unset __conda_setup
+        break
+    fi
+done
+# <<< conda initialize <<<
+
+# Antigravity CLI
+if [ -d "/home/matthias/.local/bin" ]; then
+    export PATH="/home/matthias/.local/bin:$PATH"
+fi
